@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+
+	<http:listener-config name="HTTP_Listener_Configuration"
+		host="localhost" port="6690" basePath="listentome" doc:name="HTTP Listener Configuration" />
+
+	<flow name="basic_flow">
+		<http:listener config-ref="HTTP_Listener_Configuration"
+			path="/*" doc:name="HTTP">
+			<http:response-builder 
+				disablePropertiesAsHeaders="true" doc:name="HTTP Response Builder">
+				<http:header headerName="Content-Type"
+					value="application/havesomestuff+json" />
+			</http:response-builder>
+		</http:listener>
+			<logger level="INFO" message="Level INFO message" />
+			<logger level="DEBUG" message="Level DEBUG message" />
+		
+			<logger level="INFO" message="Level INFO message with CATEGORY" doc:name="received req" category="developer-testing" />
+			
+	</flow>
+</mule>
